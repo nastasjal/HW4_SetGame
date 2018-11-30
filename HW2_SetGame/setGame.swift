@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+class SetGame {
+    var cards = [Card]()
+    
+    init (countCards: Int, countVisibleCard: Int) {
+        for _ in 0..<countCards {
+            var card = Card()
+            if cards.count < countVisibleCard { card.visibleCard = true }
+            cards += [card]
+        }
+    }
+}
