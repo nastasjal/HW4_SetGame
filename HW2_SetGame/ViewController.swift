@@ -23,6 +23,13 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func touchCard(_ sender: UIButton) {
+        if let cardNumber = cardButton.index(of: sender) {
+            game.chooseCard(at: cardNumber)
+            updateViewFromModel()
+        }
+    }
+    
     // allDeck is array af all deck (81 card)
     var allDeck = deck.createDeck()
     
@@ -30,12 +37,19 @@ class ViewController: UIViewController {
     
     func updateViewFromModel() {
         for index in cardButton.indices {
-            var button = cardButton[index]
-            var card = game.cards[index]
+            let button = cardButton[index]
+            let card = game.cards[index]
             if card.visibleCard {
-              var currentTitle = getTitle(for: card)
-                var text = getTitleProperties(titleFor: currentTitle)
-              button.setAttributedTitle(text, for: .normal)
+                let currentTitle = getTitle(for: card)
+                let text = getTitleProperties(titleFor: currentTitle)
+                 button.setAttributedTitle(text, for: .normal)
+                 button.layer.borderWidth = 3.0
+                 button.layer.borderColor = UIColor.green.cgColor
+                print ("index Card= \(index) selected = \(card.selectedCard)")
+                if card.selectedCard {
+                    button.layer.borderWidth = 3.0
+                    button.layer.borderColor = UIColor.blue.cgColor
+                }
             } else {
                 button.isHidden = true
             }
@@ -54,7 +68,7 @@ class ViewController: UIViewController {
     }
     
     func getTitleProperties (titleFor: deck.oneCard)-> NSAttributedString{
-        var (alpha, color) = (titleFor.cardAlpha,titleFor.cardColor)
+        let (alpha, color) = (titleFor.cardAlpha,titleFor.cardColor)
         var attributedColor = UIColor()
         var attributedAlpha = Float()
         var attributedWidth = Int()
@@ -71,25 +85,27 @@ class ViewController: UIViewController {
         switch alpha {
         case .filled:
             attributedAlpha = 1
-            attributedWidth = -8
+            attributedWidth = -5
         case .outline:
             attributedAlpha = 0.5
-            attributedWidth = 8
+            attributedWidth = 5
         case .stripped: attributedAlpha = 0.3
-            attributedWidth = -8
+            attributedWidth = -5
         }
         
         let myAttribute:[NSAttributedString.Key : Any] = [ .foregroundColor: attributedColor.withAlphaComponent(CGFloat(attributedAlpha)), .strokeColor: attributedColor, .strokeWidth: attributedWidth ]
-      /*  let attributes:[NSAttributedString.Key : Any] = [
-            .strokeColor: colors[card.color.idx],
-            .strokeWidth: strokeWidths[card.fill.idx],
-            .foregroundColor: colors[card.color.idx].withAlphaComponent(alphas[card.fill.idx])
-        ]*/
-        
-        var str = String(repeating: titleFor.cardFigure.rawValue, count: titleFor.cardCount.rawValue)
+        let str = String(repeating: titleFor.cardFigure.rawValue, count: titleFor.cardCount.rawValue)
         let myAttrString = NSAttributedString(string: str, attributes: myAttribute)
         return myAttrString
     }
+    
+  /*  func checkSet(for candidateCards: [deck.oneCard]) -> Bool {
+        if candidateCards.count == 3 {
+            let sum1 = candidateCards.reduce(0, {$0 + $1.cardAlpha.hashValue})
+             return sum1 % 3 == 0 ? true : false
+        }
+        return false
+    }*/
     
     @IBOutlet var cardButton: [UIButton]!
     @IBAction func moreCards() {

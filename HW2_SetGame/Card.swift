@@ -15,6 +15,7 @@ struct Card: Hashable {
     }
     
     var visibleCard = false
+    var selectedCard = false
     
     private var identifier: Int
     
