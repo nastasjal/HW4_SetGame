@@ -12,7 +12,6 @@ class ViewController: UIViewController {
 
     var countVisibleCards = 22 {
         didSet {
-           // (cardButton.count > countVisibleCards) ? cardButton.count : countVisibleCards
             updateViewFromModel()
         }
     }
@@ -53,26 +52,17 @@ class ViewController: UIViewController {
                 if game.selectedCards.contains(card) && game.setOnTheTable {
                     button.layer.borderWidth = 3.0
                     button.layer.borderColor = UIColor.green.cgColor
-                 //   buttonTitles.removeValue(forKey: index)
-                 //   game.allCardsOnTheTable[index] = game.deck.remove(at: 1)
                 }
             } else {
                 button.isHidden = true
             }
    }
-        if game.setOnTheTable {
-            game.selectedCards.removeAll()
-            game.setOnTheTable = false
-        }
     }
     
     var buttonTitles=[Int:Card]()
     
     func linkCardsWithButton(for card: Card, with indexButton: Int){
         buttonTitles.updateValue(card, forKey: indexButton)
-      /* if buttonTitles[indexButton] != card {
-        buttonTitles[indexButton] = card
-        }*/
     }
     
     func getTitleProperties (titleFor: Card)-> NSAttributedString{

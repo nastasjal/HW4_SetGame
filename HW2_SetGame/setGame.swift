@@ -32,6 +32,7 @@ class SetGame {
         return arrayDeck
         
     }
+    
     func chooseCard (for card: Card){
         
         switch selectedCards.count {
@@ -41,15 +42,15 @@ class SetGame {
                     let indexForRemove = selectedCards.index(of:card)
                     selectedCards.remove(at: indexForRemove!)
                 } else {
-                     selectedCards += [card]
+                    selectedCards += [card]
                     if selectedCards.count == 3 {
-                        
+                        if checkSet(for: selectedCards) { setOnTheTable = true}
                     }
                 }
                 
             }
         case 3:
-            do { if checkSet(for: selectedCards) { setOnTheTable = true
+            do { if checkSet(for: selectedCards) {
                 for card in selectedCards {
                     if let indexCrad = visibleCards.index(of: card) {
                         visibleCards[indexCrad] = self.deck.remove(at: 1)
@@ -58,32 +59,15 @@ class SetGame {
                         }
                     }
                 }
-        } else {selectedCards.removeAll()}}
+                setOnTheTable = false
+            } //else {
+                selectedCards.removeAll()
+                selectedCards += [card]
+              //  }
+            }
         default:
             print ("tratata")
         }
-      /*  if selectedCards.count < 3 && selectedCards.contains(card){
-            let indexForRemove = selectedCards.index(of:card)
-            selectedCards.remove(at: indexForRemove!)
-        }
-        else
-        if selectedCards.count < 3 && !selectedCards.contains(card) {
-            selectedCards += [card]
-
-        }
-        if selectedCards.count == 3 {
-            if checkSet(for: selectedCards) { setOnTheTable = true
-                for card in selectedCards {
-                    if let indexCrad = visibleCards.index(of: card) {
-                        visibleCards[indexCrad] = self.deck.remove(at: 1)
-                        if let index = allCardsOnTheTable.index(of: card) {
-                            allCardsOnTheTable[index] = visibleCards[indexCrad]
-                        }
-                    }
-                }
-            } else {selectedCards.removeAll()}
-        }
-*/
     }
     
     func checkSet(for cards: [Card])-> Bool {
