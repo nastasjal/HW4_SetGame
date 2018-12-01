@@ -33,6 +33,7 @@ class SetGame {
         
     }
     
+    //TODO: TEST ALGORITM CHOOSECARD
     func chooseCard (for card: Card){
         
         switch selectedCards.count {
@@ -52,12 +53,21 @@ class SetGame {
         case 3:
             do { if checkSet(for: selectedCards) {
                 for card in selectedCards {
+                 //   if self.deck.count > 0 {
                     if let indexCrad = visibleCards.index(of: card) {
-                        visibleCards[indexCrad] = self.deck.remove(at: 1)
-                        if let index = allCardsOnTheTable.index(of: card) {
-                            allCardsOnTheTable[index] = visibleCards[indexCrad]
+                        if self.deck.count > 0 {
+                        visibleCards[indexCrad] = self.deck.remove(at: 0)
+                            if let index = allCardsOnTheTable.index(of: card) {
+                                allCardsOnTheTable[index] = visibleCards[indexCrad]
+                            }
+                        } else {
+                           visibleCards.remove(at: indexCrad)
                         }
-                    }
+                  /*      if let index = allCardsOnTheTable.index(of: card) {
+                            allCardsOnTheTable[index] = visibleCards[indexCrad]
+                        }*/
+                 //   }
+                    } 
                 }
                 setOnTheTable = false
             } //else {
@@ -72,12 +82,20 @@ class SetGame {
     
     func checkSet(for cards: [Card])-> Bool {
         if cards.count == 3 {
-            let sum = cards.map({$0.cardAlpha.rawValue}).reduce(0, +) + cards.map({$0.cardColor.rawValue}).reduce(0, +) + cards.map({$0.cardCount.rawValue}).reduce(0, +) + cards.map({$0.cardFigure.rawValue}).reduce(0, +)
-            return sum % 3 == 0 ? true : false
+            return (cards.map({$0.cardAlpha.rawValue}).reduce(0, +) % 3 == 0 && cards.map({$0.cardColor.rawValue}).reduce(0, +) % 3 == 0 && cards.map({$0.cardCount.rawValue}).reduce(0, +) % 3 == 0 && cards.map({$0.cardFigure.rawValue}).reduce(0, +) % 3 == 0) ? true : false
         }
         return false
     }
     
+    func deal3Card(){
+        if !setOnTheTable {
+            for _ in 0..<3 {
+                let index = visibleCards.count
+                visibleCards.append(allCardsOnTheTable[index])
+            }
+        }
+        setOnTheTable = false
+    }
     
     init (countVisibleCard: Int, countCardsOnTheTable: Int) {
         self.deck = SetGame.createDeck()

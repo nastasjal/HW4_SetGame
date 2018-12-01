@@ -10,8 +10,12 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var countVisibleCards = 22 {
+    @IBOutlet weak var dealCardsButton: UIButton!
+    var countVisibleCards = 12 {
         didSet {
+            if countVisibleCards == countCardsOnTheTable{
+                dealCardsButton.isHidden = true
+            }
             updateViewFromModel()
         }
     }
@@ -41,6 +45,7 @@ class ViewController: UIViewController {
             let card = game.allCardsOnTheTable[index]
             linkCardsWithButton(for: card, with: index)
             if game.visibleCards.contains(card) {
+                button.isHidden = false
                 let text = getTitleProperties(titleFor: card)
                 button.setAttributedTitle(text, for: .normal)
                 button.layer.borderWidth = 1.0
@@ -99,6 +104,8 @@ class ViewController: UIViewController {
     
     @IBOutlet var cardButton: [UIButton]!
     @IBAction func moreCards() {
+    game.deal3Card()
+    countVisibleCards = game.visibleCards.count
     }
     
     override func viewDidLoad() {
