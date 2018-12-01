@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+/*
 struct deck {
     enum color: CaseIterable {
         case red
@@ -58,3 +58,4 @@ struct deck {
         
     }
 }
+*/

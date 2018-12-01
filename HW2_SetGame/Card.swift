@@ -7,26 +7,46 @@
 //
 
 import Foundation
-struct Card: Hashable {
-    var hashValue: Int { return identifier}
+struct Card: Equatable {
+    
+    enum color:Int, CaseIterable {
+        case red = 1
+        case green
+        case blue
+    }
+    
+    enum figure: Int, CaseIterable {
+        case treug = 1
+        case round
+        case rectangle
+    }
+    
+    enum countFigure: Int, CaseIterable {
+        case one = 1
+        case two
+        case three
+    }
+    
+    enum alphaFigure: Int, CaseIterable {
+        case stripped = 1
+        case filled
+        case outline
+    }
+    
+    var cardColor: color
+    var cardFigure: figure
+    var cardCount: countFigure
+    var cardAlpha: alphaFigure
     
     static func == (lhs: Card, rhs: Card) -> Bool {
-        return lhs.identifier == rhs.identifier
+        return (lhs.cardAlpha == rhs.cardAlpha) && (lhs.cardColor == rhs.cardColor) && (lhs.cardCount == rhs.cardCount ) && (lhs.cardFigure == rhs.cardFigure)
     }
-    
-    var visibleCard = false
-    var selectedCard = false
-    
-    private var identifier: Int
-    
-    private static var identifierFactory = 0
-    
-    private static func getUniqueIdentifier () -> Int {
-        Card.identifierFactory += 1
-        return Card.identifierFactory
+   
+    init (cardColor: color, cardFigure: figure, cardCount: countFigure,  cardAlpha: alphaFigure) {
+        self.cardAlpha = cardAlpha
+        self.cardColor = cardColor
+        self.cardCount = cardCount
+        self.cardFigure = cardFigure
     }
-    
-    init() {
-        self.identifier = Card.getUniqueIdentifier()
-    }
+
 }

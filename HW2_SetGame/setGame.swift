@@ -9,32 +9,98 @@
 import Foundation
 
 class SetGame {
-    var cards = [Card]()
-    var selectedCardsIndexes = [Int]()
+    var visibleCards = [Card]()
+    var selectedCards = [Card]()
+    var allCardsOnTheTable = [Card]()
+    var setOnTheTable: Bool = false
+    var deck = [Card]()
+
     
-    func chooseCard (at index: Int){
-        if selectedCardsIndexes.count < 3 && selectedCardsIndexes.contains(index){
-            cards[index].selectedCard = false
-            print ("change selected card to \(cards[index].selectedCard)")
-          //  selectedCardsIndexes = selectedCardsIndexes.filter { $0 != index }
-            let indexForRemove = selectedCardsIndexes.index(of:index)
-            selectedCardsIndexes.remove(at: indexForRemove!)
+    static func createDeck()-> [Card] {
+        var arrayDeck = [Card]()
+        for indexColor in Card.color.allCases {
+            for indexFigure in Card.figure.allCases {
+                for indexCountFigure in Card.countFigure.allCases {
+                    for indexAlpha in Card.alphaFigure.allCases {
+                        let newCard = Card(cardColor: indexColor, cardFigure: indexFigure, cardCount: indexCountFigure, cardAlpha: indexAlpha )
+                        arrayDeck.append(newCard)
+                    }
+                }
+            }
+        }
+        arrayDeck.shuffle()
+        return arrayDeck
+        
+    }
+    func chooseCard (for card: Card){
+        
+        switch selectedCards.count {
+        case 0..<3:
+            do {
+                if selectedCards.contains(card) {
+                    let indexForRemove = selectedCards.index(of:card)
+                    selectedCards.remove(at: indexForRemove!)
+                } else {
+                     selectedCards += [card]
+                    if selectedCards.count == 3 {
+                        
+                    }
+                }
+                
+            }
+        case 3:
+            do { if checkSet(for: selectedCards) { setOnTheTable = true
+                for card in selectedCards {
+                    if let indexCrad = visibleCards.index(of: card) {
+                        visibleCards[indexCrad] = self.deck.remove(at: 1)
+                        if let index = allCardsOnTheTable.index(of: card) {
+                            allCardsOnTheTable[index] = visibleCards[indexCrad]
+                        }
+                    }
+                }
+        } else {selectedCards.removeAll()}}
+        default:
+            print ("tratata")
+        }
+      /*  if selectedCards.count < 3 && selectedCards.contains(card){
+            let indexForRemove = selectedCards.index(of:card)
+            selectedCards.remove(at: indexForRemove!)
         }
         else
-        if selectedCardsIndexes.count < 3 && !selectedCardsIndexes.contains(index) {
-            cards[index].selectedCard = true
-            selectedCardsIndexes.append(index)
+        if selectedCards.count < 3 && !selectedCards.contains(card) {
+            selectedCards += [card]
+
         }
-        if selectedCardsIndexes.count == 3 {
-            
+        if selectedCards.count == 3 {
+            if checkSet(for: selectedCards) { setOnTheTable = true
+                for card in selectedCards {
+                    if let indexCrad = visibleCards.index(of: card) {
+                        visibleCards[indexCrad] = self.deck.remove(at: 1)
+                        if let index = allCardsOnTheTable.index(of: card) {
+                            allCardsOnTheTable[index] = visibleCards[indexCrad]
+                        }
+                    }
+                }
+            } else {selectedCards.removeAll()}
         }
+*/
     }
     
-    init (countCards: Int, countVisibleCard: Int) {
-        for _ in 0..<countCards {
-            var card = Card()
-            if cards.count < countVisibleCard { card.visibleCard = true }
-            cards += [card]
+    func checkSet(for cards: [Card])-> Bool {
+        if cards.count == 3 {
+            let sum = cards.map({$0.cardAlpha.rawValue}).reduce(0, +) + cards.map({$0.cardColor.rawValue}).reduce(0, +) + cards.map({$0.cardCount.rawValue}).reduce(0, +) + cards.map({$0.cardFigure.rawValue}).reduce(0, +)
+            return sum % 3 == 0 ? true : false
         }
+        return false
     }
+    
+    
+    init (countVisibleCard: Int, countCardsOnTheTable: Int) {
+        self.deck = SetGame.createDeck()
+        for index in 0..<countCardsOnTheTable {
+            let card = deck.remove(at: index)
+            allCardsOnTheTable += [card]
+            if index <  countVisibleCard {visibleCards += [card]}
+        }
+ }
 }
