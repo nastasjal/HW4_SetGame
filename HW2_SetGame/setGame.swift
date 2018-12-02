@@ -33,7 +33,6 @@ class SetGame {
         
     }
     
-    //TODO: TEST ALGORITM CHOOSECARD
     func chooseCard (for card: Card){
         
         switch selectedCards.count {
@@ -52,8 +51,10 @@ class SetGame {
             }
         case 3:
             do { if checkSet(for: selectedCards) {
+                if selectedCards.contains(card) {
+                        selectedCards.removeAll()
+                } else {
                 for card in selectedCards {
-                 //   if self.deck.count > 0 {
                     if let indexCrad = visibleCards.index(of: card) {
                         if self.deck.count > 0 {
                         visibleCards[indexCrad] = self.deck.remove(at: 0)
@@ -63,17 +64,14 @@ class SetGame {
                         } else {
                            visibleCards.remove(at: indexCrad)
                         }
-                  /*      if let index = allCardsOnTheTable.index(of: card) {
-                            allCardsOnTheTable[index] = visibleCards[indexCrad]
-                        }*/
-                 //   }
+                
+                    }
                     } 
                 }
                 setOnTheTable = false
-            } //else {
+            }
                 selectedCards.removeAll()
                 selectedCards += [card]
-              //  }
             }
         default:
             print ("tratata")

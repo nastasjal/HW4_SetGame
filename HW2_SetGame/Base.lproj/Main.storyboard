@@ -39,9 +39,6 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQT-Lf-iiP">
                                                 <rect key="frame" x="0.0" y="0.0" width="83" height="84.5"/>
                                                 <color key="backgroundColor" red="1" green="0.95005834389999999" blue="0.5856688028" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="84.5" id="2Xt-Qv-TaH"/>
-                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <connections>
                                                     <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9hd-PK-7bD"/>
