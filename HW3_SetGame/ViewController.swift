@@ -121,8 +121,8 @@ class ViewController: UIViewController {
     
     @objc func tapCard(recognizedBy recognizer: UITapGestureRecognizer){
         if let cardView = recognizer.view as? CardView{
-            var index = TableView.cardViewArray.index(of:cardView)!
-            var card = game.allCardsOnTheTable[index]
+            let index = TableView.cardViewArray.index(of:cardView)!
+            let card = game.allCardsOnTheTable[index]
             game.chooseCard(for: card)
             updateViewFromModel()
         }
@@ -215,7 +215,10 @@ class ViewController: UIViewController {
     //TODO: remove
     @IBOutlet var cardButton: [UIButton]!
     
-  
+    @IBAction func moreCardss() {
+        game.deal3Card()
+        countVisibleCards = game.visibleCards.count
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad ()

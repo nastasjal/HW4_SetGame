@@ -38,7 +38,7 @@ class CardView: UIView {
     
     override func draw(_ rect: CGRect) {
         let cardRect = UIBezierPath(roundedRect: rect, cornerRadius: 10)
-        UIColor.yellow.setFill()
+        UIColor.white.setFill()
         cardRect.fill()
         
         for index in 0..<figureCounts {
@@ -71,8 +71,8 @@ class CardView: UIView {
     func strippedRect(in rect: CGRect){
         let strippedPath = UIBezierPath()
         for interval in stride(from: 0, to: rect.maxX, by: 3) {
-            strippedPath.move(to: CGPoint(x: interval*2, y: rect.minY))
-            strippedPath.addLine(to: CGPoint(x: interval, y: rect.maxY))
+            strippedPath.move(to: CGPoint(x: interval+2, y: rect.minY))
+            strippedPath.addLine(to: CGPoint(x: interval-1, y: rect.maxY))
         }
         let strokeColor = figureColor
         strokeColor.setStroke()
