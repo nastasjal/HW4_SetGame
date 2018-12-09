@@ -63,6 +63,7 @@ class SetGame {
                                 }
                             } else {
                                 visibleCards.remove(at: indexCrad)
+                                allCardsOnTheTable.remove(at: indexCrad)
                             }
                             
                         }
@@ -86,7 +87,7 @@ class SetGame {
     }
     
     func deal3Card(){
-        if !setOnTheTable {
+        if !setOnTheTable && (deck.count > 0) {
             for _ in 0..<3 {
                 let card = self.deck.remove(at: 0)
                 allCardsOnTheTable.append(card)
