@@ -11,7 +11,7 @@ import Foundation
 class SetGame {
     var visibleCards = [Card]()
     var selectedCards = [Card]()
-    var allCardsOnTheTable = [Card]()
+    var allCardsOnTheTable = [Card]() 
     var setOnTheTable: Bool = false
     var deck = [Card]()
     
@@ -88,8 +88,12 @@ class SetGame {
     func deal3Card(){
         if !setOnTheTable {
             for _ in 0..<3 {
-                let index = visibleCards.count
-                visibleCards.append(allCardsOnTheTable[index])
+                let card = self.deck.remove(at: 0)
+                allCardsOnTheTable.append(card)
+                visibleCards.append(card)
+         
+              /*  let index = visibleCards.count
+                visibleCards.append(allCardsOnTheTable[index])*/
             }
         }
         setOnTheTable = false

@@ -11,17 +11,74 @@ import UIKit
 class TableView: UIView {
     
     
-    var cardsCountOnTheTable: Int = 3 {
+    var cardViewArray = [CardView]()
+    {
+        willSet { removeSubviews() }
+        didSet { addSubviews()
+            setNeedsDisplay()
+            setNeedsLayout() }
+    }
+    
+ /*  var cardsCountOnTheTable: Int = 15 {
         didSet {
+            grid.cellCount = cardsCountOnTheTable
+        //   cardViewArray.removeAll()
+            for index in 0..<cardsCountOnTheTable {
+                cardViewArray.append(CardView(frame: grid[index]! ))
+            }
             setNeedsDisplay()
             setNeedsLayout()
         }
-    }
-    
-    var visibleCards = [Card]()
-    
+    }*/
+   
+  /*  override func layoutSubviews() {
+        super.layoutSubviews()
+        var grid = Grid(layout: Grid.Layout.aspectRatio(0.7),
+                        frame: bounds)
+         grid.cellCount = cardViewArray.count
+        for index in 0..<cardViewArray.count {
+            cardViewArray[index].frame =  grid[index]!
+        }
+      print (subviews)
+      
+    }*/
     
     override func draw(_ rect: CGRect) {
+        var grid = Grid(layout: Grid.Layout.aspectRatio(0.7),
+                        frame: bounds)
+        grid.cellCount = cardViewArray.count
+        for index in 0..<cardViewArray.count {
+            cardViewArray[index].frame =  grid[index]!
+        }
+    }
+    
+    
+    func updateView(){
+        removeSubviews()
+        addSubviews()
+        setNeedsLayout()
+        setNeedsDisplay()
+    }
+    
+    
+    
+    private func removeSubviews() {
+        for card in cardViewArray {
+            card.removeFromSuperview()
+        }
+        print("remove all subviews")
+        print (subviews)
+    }
+    
+    private func addSubviews() {
+        for card in cardViewArray {
+            addSubview(card)
+        }
+        print ("add all subviews")
+        print (subviews)
+    }
+    
+  /*  override func draw(_ rect: CGRect) {
         
         var grid = Grid(layout: Grid.Layout.aspectRatio(0.7),
                         frame: bounds)
@@ -69,24 +126,9 @@ class TableView: UIView {
         }
         
     }
-    
-    
+    */
+   
     
     
 }
 
-extension TableView {
-    
-    var cardWidth: CGFloat {
-        return cardHeight * 5 / 8
-    }
-    
-    var cardHeight: CGFloat {
-        return  (bounds.height - CGFloat(rowCount * 5))/CGFloat(rowCount)
-    }
-    
-    var rowCount: Int {
-        return (cardsCountOnTheTable / 3)
-    }
-    
-}

@@ -12,26 +12,34 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var TableView: TableView! 
     
-    
-    
     @IBOutlet weak var dealCardsButton: UIButton!
-    var countVisibleCards = 18 {
+    
+
+    @IBAction func moreCards() {
+        game.deal3Card()
+        countVisibleCards = game.visibleCards.count
+    }
+    
+    
+    var countVisibleCards = 12 {
         didSet {
-            if countVisibleCards == countCardsOnTheTable{
-                dealCardsButton.isHidden = true
+            if countVisibleCards == game.deck.count{
+               // dealCardsButton.isHidden = true
             }
             updateViewFromModel()
         }
     }
     
-    var symbols:[String] = ["▲", "●", "■"]
     
-    var countCardsOnTheTable: Int  = 18 //{
+    //TODO: delete countCardsOnTheTable
+    var countCardsOnTheTable: Int  = 15 //{
     /* get {
      return cardButton.count
      }*/
     //  }
     
+    
+    //TODO: replace function to gesture TAP
     @IBAction func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButton.index(of: sender) {
             let card = buttonTitles[cardNumber]
@@ -47,7 +55,7 @@ class ViewController: UIViewController {
     
     
     
-    func updateViewFromModel() {
+ /*   func updateViewFromModel() {
         for index in cardButton.indices {
             let button = cardButton[index]
             let card = game.allCardsOnTheTable[index]
@@ -71,15 +79,106 @@ class ViewController: UIViewController {
                 
             }
         }
+    }*/
+    
+    func updateViewFromModel() {
+        for index in game.allCardsOnTheTable.indices {
+            let card = game.allCardsOnTheTable[index]
+            if TableView.cardViewArray.count <= index {
+                let cardView = CardView()
+                TableView.cardViewArray.append(cardView)
+                addTapGestureRecognizer(for: cardView)
+                updateCardView(cardView: cardView, for: card)
+            } else {
+              //  let cardNewView = CardView()
+               // TableView.cardViewArray[index] = cardNewView
+            let cardView = TableView.cardViewArray[index]
+                updateCardView(cardView: cardView, for: card)
+                cardView.layer.borderWidth = 1.0
+                cardView.layer.borderColor = nil
+                if game.selectedCards.contains(card) && !game.setOnTheTable {
+                    cardView.layer.borderWidth = 3.0
+                    cardView.layer.borderColor = UIColor.blue.cgColor
+                }
+                if game.selectedCards.contains(card) && game.setOnTheTable {
+                    cardView.layer.borderWidth = 3.0
+                    cardView.layer.borderColor = UIColor.green.cgColor
+                }
+                
+            }
+            
+            
+        }
+        
+    }
+    
+    func addTapGestureRecognizer(for cardView: CardView) {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapCard(recognizedBy: )))
+        tap.numberOfTapsRequired = 1
+        tap.numberOfTouchesRequired = 1
+        cardView.addGestureRecognizer(tap)
+    }
+    
+    @objc func tapCard(recognizedBy recognizer: UITapGestureRecognizer){
+        if let cardView = recognizer.view as? CardView{
+            var index = TableView.cardViewArray.index(of:cardView)!
+            var card = game.allCardsOnTheTable[index]
+            game.chooseCard(for: card)
+            updateViewFromModel()
+        }
+        
+    }
+    
+    func updateCardView(cardView: CardView, for card: Card){
+        let addCard = cardView
+        
+        switch card.cardColor{
+        case .blue:
+            addCard.figureColor = UIColor.blue
+        case .green:
+            addCard.figureColor = UIColor.green
+        case .red:
+            addCard.figureColor = UIColor.red
+        }
+        switch card.cardFigure{
+        case .diamond:
+            addCard.figureType = .diamond
+        case .round:
+            addCard.figureType = .round
+        case .squiggle:
+            addCard.figureType = .squiggle
+        }
+        switch card.cardCount {
+        case .one:
+            addCard.figureCounts = 1
+        case .two:
+            addCard.figureCounts = 2
+        case .three:
+            addCard.figureCounts = 3
+        }
+        
+        switch card.cardAlpha {
+        case .solid:
+            addCard.figureFill = .solid
+        case .unfilled:
+            addCard.figureFill = .unfilled
+        case .stripped:
+            addCard.figureFill = .stripped
+        }
     }
     
     var buttonTitles=[Int:Card]()
     
-    func linkCardsWithButton(for card: Card, with indexButton: Int){
-        buttonTitles.updateValue(card, forKey: indexButton)
-    }
+  /*  func linkCardsWithButton(for card: Card, with indexButton: Int){
+       if TableView.cardViewArray.count < indexButton {
+            let cardView = CardView()
+            TableView.cardViewArray.append(cardView)
+          //  updateCardView(cardView: cardView, for: card)
+        }
+      //  buttonTitles.updateValue(card, forKey: indexButton)
+    }*/
     
-    func getTitleProperties (titleFor: Card)-> NSAttributedString{
+  /*  func getTitleProperties (titleFor: Card)-> NSAttributedString{
         let (alpha, color) = (titleFor.cardAlpha,titleFor.cardColor)
         var attributedColor = UIColor()
         var attributedAlpha = Float()
@@ -110,18 +209,19 @@ class ViewController: UIViewController {
         let myAttrString = NSAttributedString(string: str, attributes: myAttribute)
         return myAttrString
     }
+    */
     
+    
+    //TODO: remove
     @IBOutlet var cardButton: [UIButton]!
-    @IBAction func moreCards() {
-        game.deal3Card()
-        countVisibleCards = game.visibleCards.count
-    }
+    
+  
     
     override func viewDidLoad() {
         super.viewDidLoad ()
-        TableView.cardsCountOnTheTable = 18
-        TableView.visibleCards = game.visibleCards
-        // updateViewFromModel()
+       // TableView.cardsCountOnTheTable = 18
+      //  TableView.visibleCards = game.visibleCards
+         updateViewFromModel()
     }
     
 }

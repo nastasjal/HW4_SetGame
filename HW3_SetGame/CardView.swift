@@ -10,10 +10,19 @@ import UIKit
 
 class CardView: UIView {
     
-    var figureColor: UIColor = UIColor.green
-    var figureCounts: Int = 2
-    var figureType = figure.diamond
-    var figureFill = fill.stripped
+    var figureColor: UIColor = UIColor.green {
+        didSet {setNeedsDisplay()}
+        }
+    
+    var figureCounts: Int = 2 {
+        didSet {setNeedsDisplay()}
+    }
+    var figureType = figure.diamond {
+        didSet {setNeedsDisplay()}
+    }
+    var figureFill = fill.stripped {
+        didSet {setNeedsDisplay()}
+    }
     
     enum figure: Int, CaseIterable {
         case squiggle = 1
@@ -95,14 +104,7 @@ class CardView: UIView {
                       controlPoint1: CGPoint(x: rect.maxX + rect.midX/3, y: rect.maxY + rect.midY/2),
                       controlPoint2: CGPoint(x: rect.minX / 2 + rect.midX/2, y: rect.minY/5 + rect.midY/2))
         path.close()
-        /* path.addCurve(to: CGPoint(x: rightPointX + leftPointX/2, y: topPointY * 2 / 5),
-         controlPoint1: CGPoint(x: leftPointX / 2, y: topPointY/5),
-         controlPoint2: CGPoint(x: rightPointX + leftPointX/2, y: topPointY))
-         
-         path.addCurve(to: CGPoint(x: leftPointX / 2, y: topPointY),
-         controlPoint1: CGPoint(x: rightPointX + leftPointX, y: topPointY*3/2) ,
-         controlPoint2: CGPoint(x: leftPointX, y: topPointY*7/10))
-         */return path
+        return path
     }
     
     func drowDiamonds(in rect: CGRect) -> UIBezierPath {

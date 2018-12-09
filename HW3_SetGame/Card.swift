@@ -16,9 +16,9 @@ struct Card: Equatable {
     }
     
     enum figure: Int, CaseIterable {
-        case treug = 1
+        case squiggle = 1
         case round
-        case rectangle
+        case diamond
     }
     
     enum countFigure: Int, CaseIterable {
@@ -29,8 +29,8 @@ struct Card: Equatable {
     
     enum alphaFigure: Int, CaseIterable {
         case stripped = 1
-        case filled
-        case outline
+        case solid
+        case unfilled
     }
     
     var cardColor: color
