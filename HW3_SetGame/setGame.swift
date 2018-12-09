@@ -14,7 +14,7 @@ class SetGame {
     var allCardsOnTheTable = [Card]()
     var setOnTheTable: Bool = false
     var deck = [Card]()
-
+    
     
     static func createDeck()-> [Card] {
         var arrayDeck = [Card]()
@@ -52,24 +52,24 @@ class SetGame {
         case 3:
             do { if checkSet(for: selectedCards) {
                 if selectedCards.contains(card) {
-                        selectedCards.removeAll()
+                    selectedCards.removeAll()
                 } else {
-                for card in selectedCards {
-                    if let indexCrad = visibleCards.index(of: card) {
-                        if self.deck.count > 0 {
-                        visibleCards[indexCrad] = self.deck.remove(at: 0)
-                            if let index = allCardsOnTheTable.index(of: card) {
-                                allCardsOnTheTable[index] = visibleCards[indexCrad]
+                    for card in selectedCards {
+                        if let indexCrad = visibleCards.index(of: card) {
+                            if self.deck.count > 0 {
+                                visibleCards[indexCrad] = self.deck.remove(at: 0)
+                                if let index = allCardsOnTheTable.index(of: card) {
+                                    allCardsOnTheTable[index] = visibleCards[indexCrad]
+                                }
+                            } else {
+                                visibleCards.remove(at: indexCrad)
                             }
-                        } else {
-                           visibleCards.remove(at: indexCrad)
+                            
                         }
-                
-                    }
                     } 
                 }
                 setOnTheTable = false
-            }
+                }
                 selectedCards.removeAll()
                 selectedCards += [card]
             }
@@ -102,5 +102,5 @@ class SetGame {
             allCardsOnTheTable += [card]
             if index <  countVisibleCard {visibleCards += [card]}
         }
- }
+    }
 }

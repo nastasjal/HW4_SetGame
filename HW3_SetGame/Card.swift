@@ -10,8 +10,8 @@ import Foundation
 struct Card: Equatable {
     
     enum color:Int, CaseIterable {
-        case red = 1
-        case green
+        case green = 1
+        case red
         case blue
     }
     

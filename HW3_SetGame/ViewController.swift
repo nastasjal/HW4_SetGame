@@ -9,9 +9,13 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var TableView: TableView! 
+    
+    
+    
     @IBOutlet weak var dealCardsButton: UIButton!
-    var countVisibleCards = 12 {
+    var countVisibleCards = 18 {
         didSet {
             if countVisibleCards == countCardsOnTheTable{
                 dealCardsButton.isHidden = true
@@ -19,25 +23,29 @@ class ViewController: UIViewController {
             updateViewFromModel()
         }
     }
- 
+    
     var symbols:[String] = ["▲", "●", "■"]
     
-    var countCardsOnTheTable: Int {
-        get {
-            return cardButton.count
-        }
-    }
+    var countCardsOnTheTable: Int  = 18 //{
+    /* get {
+     return cardButton.count
+     }*/
+    //  }
     
     @IBAction func touchCard(_ sender: UIButton) {
-       if let cardNumber = cardButton.index(of: sender) {
-        let card = buttonTitles[cardNumber]
-        game.chooseCard(for: card!)
-        updateViewFromModel()
+        if let cardNumber = cardButton.index(of: sender) {
+            let card = buttonTitles[cardNumber]
+            game.chooseCard(for: card!)
+            updateViewFromModel()
         }
     }
     
     
     lazy var game = SetGame(countVisibleCard: countVisibleCards, countCardsOnTheTable: countCardsOnTheTable)
+    
+    
+    
+    
     
     func updateViewFromModel() {
         for index in cardButton.indices {
@@ -60,8 +68,9 @@ class ViewController: UIViewController {
                 }
             } else {
                 button.isHidden = true
+                
             }
-   }
+        }
     }
     
     var buttonTitles=[Int:Card]()
@@ -93,7 +102,7 @@ class ViewController: UIViewController {
             attributedAlpha = 0.5
             attributedWidth = 5
         case .stripped: attributedAlpha = 0.3
-            attributedWidth = -5
+        attributedWidth = -5
         }
         
         let myAttribute:[NSAttributedString.Key : Any] = [ .foregroundColor: attributedColor.withAlphaComponent(CGFloat(attributedAlpha)), .strokeColor: attributedColor, .strokeWidth: attributedWidth ]
@@ -104,13 +113,15 @@ class ViewController: UIViewController {
     
     @IBOutlet var cardButton: [UIButton]!
     @IBAction func moreCards() {
-    game.deal3Card()
-    countVisibleCards = game.visibleCards.count
+        game.deal3Card()
+        countVisibleCards = game.visibleCards.count
     }
     
     override func viewDidLoad() {
         super.viewDidLoad ()
-        updateViewFromModel()
+        TableView.cardsCountOnTheTable = 18
+        TableView.visibleCards = game.visibleCards
+        // updateViewFromModel()
     }
     
 }
