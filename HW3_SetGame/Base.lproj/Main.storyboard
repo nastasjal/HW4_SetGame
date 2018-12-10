@@ -36,6 +36,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.19856417179107666" green="0.42977285385131836" blue="0.34125241637229919" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="7C7-YK-ZOm" secondAttribute="bottom" constant="20" id="1iD-H2-QAc"/>
                             <constraint firstItem="o1l-Bx-aR4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="34" id="5C5-Mo-dNS"/>
@@ -45,12 +46,20 @@
                             <constraint firstItem="o1l-Bx-aR4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="19" id="bkm-W1-KtI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="rSQ-oy-mRq" appends="YES" id="D7P-EQ-eU4"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="TableView" destination="o1l-Bx-aR4" id="gPG-Ec-m3f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <rotationGestureRecognizer id="rSQ-oy-mRq">
+                    <connections>
+                        <action selector="shuffleDeck:" destination="BYZ-38-t0r" id="luH-Dz-GEG"/>
+                    </connections>
+                </rotationGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>

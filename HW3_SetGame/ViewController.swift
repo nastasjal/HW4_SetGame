@@ -10,9 +10,21 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var TableView: TableView! 
+    @IBOutlet weak var TableView: TableView! {
+        didSet{
+          let swipeCard = UISwipeGestureRecognizer(target: self,
+                                                 action: #selector(moreCards))
+            swipeCard.direction = .down
+            TableView.addGestureRecognizer(swipeCard)
+            
+        }
+    }
     
 
+    @IBAction func shuffleDeck(_ sender: UIRotationGestureRecognizer) {
+        game.shufleDeck()
+        updateViewFromModel()
+    }
     
     @IBOutlet weak var AddCardsOnTheTable: UIButton!
     
@@ -25,7 +37,7 @@ class ViewController: UIViewController {
     var countVisibleCards = 12 {
         didSet {
             if countVisibleCards == game.deck.count{
-          //      AddCardsOnTheTable.isHidden = true
+                AddCardsOnTheTable.isHidden = true
             }
             updateViewFromModel()
         }
@@ -42,8 +54,6 @@ class ViewController: UIViewController {
     
     
     lazy var game = SetGame(countVisibleCard: countVisibleCards, countCardsOnTheTable: countCardsOnTheTable)
-    
-    
 
     
     func updateViewFromModel() {
@@ -134,15 +144,13 @@ class ViewController: UIViewController {
     }
     
    
+
     
-    //TODO: remove
-  //  @IBOutlet var cardButton: [UIButton]!
-    
-    @IBAction func moreCardss() {
+  /*  @IBAction func moreCardss() {
         game.deal3Card()
         countVisibleCards = game.visibleCards.count
     }
-    
+    */
     override func viewDidLoad() {
         super.viewDidLoad ()
          updateViewFromModel()

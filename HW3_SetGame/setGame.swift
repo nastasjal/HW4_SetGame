@@ -74,8 +74,8 @@ class SetGame {
                 selectedCards.removeAll()
                 selectedCards += [card]
             }
-        default:
-            print ("tratata")
+        default: break
+        //    print ("tratata")
         }
     }
     
@@ -92,12 +92,14 @@ class SetGame {
                 let card = self.deck.remove(at: 0)
                 allCardsOnTheTable.append(card)
                 visibleCards.append(card)
-         
-              /*  let index = visibleCards.count
-                visibleCards.append(allCardsOnTheTable[index])*/
             }
         }
         setOnTheTable = false
+    }
+    
+    func shufleDeck() {
+        allCardsOnTheTable.shuffle()
+        visibleCards = allCardsOnTheTable
     }
     
     init (countVisibleCard: Int, countCardsOnTheTable: Int) {
