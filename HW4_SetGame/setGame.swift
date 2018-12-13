@@ -56,12 +56,12 @@ class SetGame {
                 } else {
                     for card in selectedCards {
                         if let indexCrad = visibleCards.index(of: card) {
-                            if self.deck.count > 0 {
+                            if self.deck.count > 0 {  //сдача карт после сета
                                 visibleCards[indexCrad] = self.deck.remove(at: 0)
                                 if let index = allCardsOnTheTable.index(of: card) {
                                     allCardsOnTheTable[index] = visibleCards[indexCrad]
                                 }
-                            } else {
+                            } else {  // если в колоде не осталось карт, то просто удаляем сет
                                 visibleCards.remove(at: indexCrad)
                                 allCardsOnTheTable.remove(at: indexCrad)
                             }

@@ -26,7 +26,8 @@ class TableView: UIView {
                         frame: bounds)
         grid.cellCount = cardViewArray.count
         for index in 0..<cardViewArray.count {
-            cardViewArray[index].frame =  grid[index]!
+            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {self.cardViewArray[index].frame =  grid[index]!})
+          //  cardViewArray[index].frame =  grid[index]!
         }
     }
     

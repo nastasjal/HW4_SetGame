@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     }
     
 
+   
+    
     @IBAction func shuffleDeck(_ sender: UIRotationGestureRecognizer) {
         game.shufleDeck()
         updateViewFromModel()
@@ -29,6 +31,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var AddCardsOnTheTable: UIButton!
     
     @IBAction func moreCards() {
+    //    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 1, options: [.layoutSubviews, .allowAnimatedContent], animations: {self.game.deal3Card()})
         game.deal3Card()
         countVisibleCards = game.visibleCards.count
     }
@@ -55,6 +58,12 @@ class ViewController: UIViewController {
     
     lazy var game = SetGame(countVisibleCard: countVisibleCards, countCardsOnTheTable: countCardsOnTheTable)
 
+    func deal(card: CardView) {
+    //  var temporaryCardView = deckView
+
+        
+    }
+    
     
     func updateViewFromModel() {
         if TableView.cardViewArray.count > game.allCardsOnTheTable.count {
@@ -79,6 +88,10 @@ class ViewController: UIViewController {
                 if game.selectedCards.contains(card) && game.setOnTheTable {
                     cardView.layer.borderWidth = 3.0
                     cardView.layer.borderColor = UIColor.green.cgColor
+                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 0  })
+                }
+                if !game.setOnTheTable && cardView.alpha == 0 {
+                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 1 })
                 }
                 
             }
