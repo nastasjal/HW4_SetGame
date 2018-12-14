@@ -15,19 +15,26 @@ class TableView: UIView {
     {
         willSet { removeSubviews() }
         didSet { addSubviews()
-            setNeedsDisplay()
-            setNeedsLayout() }
+         //   setNeedsDisplay()
+            setNeedsLayout()
+            
+        }
     }
-   
 
     
-    override func draw(_ rect: CGRect) {
+    override func layoutSubviews() {
+        super.layoutSubviews()
         var grid = Grid(layout: Grid.Layout.aspectRatio(0.7),
                         frame: bounds)
         grid.cellCount = cardViewArray.count
         for index in 0..<cardViewArray.count {
-            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {self.cardViewArray[index].frame =  grid[index]!})
-          //  cardViewArray[index].frame =  grid[index]!
+         //   self.cardViewArray[index].alpha = 1
+          //  self.cardViewArray[index].isFaceUp = false
+            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent, .curveEaseInOut], animations: {self.cardViewArray[index].frame =  grid[index]!}, completion: { position in
+                if !self.cardViewArray[index].isFaceUp {
+                UIView.transition(with: self.cardViewArray[index], duration: 0.6, options: .transitionFlipFromLeft, animations: {self.cardViewArray[index].isFaceUp = true})
+                }
+            } )
         }
     }
     
@@ -36,7 +43,7 @@ class TableView: UIView {
         removeSubviews()
         addSubviews()
         setNeedsLayout()
-        setNeedsDisplay()
+       // setNeedsDisplay()
     }
     
     

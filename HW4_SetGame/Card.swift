@@ -38,6 +38,7 @@ struct Card: Equatable {
     var cardCount: countFigure
     var cardAlpha: alphaFigure
     
+    
     static func == (lhs: Card, rhs: Card) -> Bool {
         return (lhs.cardAlpha == rhs.cardAlpha) && (lhs.cardColor == rhs.cardColor) && (lhs.cardCount == rhs.cardCount ) && (lhs.cardFigure == rhs.cardFigure)
     }

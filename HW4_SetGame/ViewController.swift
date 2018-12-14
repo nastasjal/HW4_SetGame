@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var cardBackstage: UIView!
+    
     @IBOutlet weak var TableView: TableView! {
         didSet{
           let swipeCard = UISwipeGestureRecognizer(target: self,
@@ -46,6 +48,9 @@ class ViewController: UIViewController {
         }
     }
     
+    var deckCenter = CGPoint(x: 250  , y: 530)
+    lazy var deckRect = CGRect(origin: deckCenter, size: CGSize(width: 50, height: 80))
+    
     
     //TODO: delete countCardsOnTheTable
     var countCardsOnTheTable: Int  = 12 //{
@@ -59,8 +64,21 @@ class ViewController: UIViewController {
     lazy var game = SetGame(countVisibleCard: countVisibleCards, countCardsOnTheTable: countCardsOnTheTable)
 
     func deal(card: CardView) {
-    //  var temporaryCardView = deckView
-
+    //    let temporaryCardView = temporaryDecs()
+        card.center = deckCenter
+        card.frame = deckRect
+        card.isFaceUp = false
+        card.alpha = 1
+        
+   /*     let temporaryCardView = temporaryDecs()
+        print ("old = \(temporaryCardView.frame)")
+        let rect = card.frame
+        print ("rect = \(rect)")
+        
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent, .transitionCrossDissolve], animations: {temporaryCardView.frame = card.frame})
+        
+        print ("new = \(temporaryCardView.frame)")
+card.alpha = 1*/
         
     }
     
@@ -71,27 +89,30 @@ class ViewController: UIViewController {
         }
         for index in game.allCardsOnTheTable.indices {
             let card = game.allCardsOnTheTable[index]
-            if TableView.cardViewArray.count <= index {
+            if TableView.cardViewArray.count <= index {  //add new card from deck
                 let cardView = CardView()
                 TableView.cardViewArray.append(cardView)
                 addTapGestureRecognizer(for: cardView)
                 updateCardView(cardView: cardView, for: card)
+                deal(card: cardView)
+               // cardView.alpha = 0
             } else {
             let cardView = TableView.cardViewArray[index]
                 updateCardView(cardView: cardView, for: card)
                 cardView.layer.borderWidth = 1.0
                 cardView.layer.borderColor = nil
-                if game.selectedCards.contains(card) && !game.setOnTheTable {
+                if game.selectedCards.contains(card) && !game.setOnTheTable { //select choosen cards to blue bordercolor
                     cardView.layer.borderWidth = 3.0
                     cardView.layer.borderColor = UIColor.blue.cgColor
                 }
-                if game.selectedCards.contains(card) && game.setOnTheTable {
+                if game.selectedCards.contains(card) && game.setOnTheTable { //selectSET cards to green bordercolor
                     cardView.layer.borderWidth = 3.0
                     cardView.layer.borderColor = UIColor.green.cgColor
                     UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 0  })
                 }
                 if !game.setOnTheTable && cardView.alpha == 0 {
-                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 1 })
+                    deal(card: cardView)
+                  //  UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 1 })
                 }
                 
             }

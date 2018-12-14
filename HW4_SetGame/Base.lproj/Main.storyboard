@@ -19,11 +19,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" contentMode="redraw" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o1l-Bx-aR4" customClass="TableView" customModule="HW4_SetGame" customModuleProvider="target">
-                                <rect key="frame" x="16" y="39" width="343" height="535"/>
+                                <rect key="frame" x="16" y="39" width="343" height="505"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tCH-V7-cVE" customClass="temporaryDecs" customModule="HW4_SetGame" customModuleProvider="target">
+                                <rect key="frame" x="182" y="552" width="177" height="109"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <button opaque="NO" contentMode="center" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7C7-YK-ZOm">
-                                <rect key="frame" x="34" y="608" width="162" height="39"/>
+                                <rect key="frame" x="16" y="608" width="162" height="39"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                 <state key="normal" title="more cards">
@@ -42,7 +47,7 @@
                             <constraint firstItem="o1l-Bx-aR4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="34" id="5C5-Mo-dNS"/>
                             <constraint firstItem="7C7-YK-ZOm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="34" id="8VQ-Un-kk0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="o1l-Bx-aR4" secondAttribute="trailing" constant="38" id="BSS-OV-1sf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="o1l-Bx-aR4" secondAttribute="bottom" constant="93" id="CmC-wQ-6RW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="o1l-Bx-aR4" secondAttribute="bottom" constant="123" id="CmC-wQ-6RW"/>
                             <constraint firstItem="o1l-Bx-aR4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="19" id="bkm-W1-KtI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -52,6 +57,7 @@
                     </view>
                     <connections>
                         <outlet property="TableView" destination="o1l-Bx-aR4" id="gPG-Ec-m3f"/>
+                        <outlet property="cardBackstage" destination="tCH-V7-cVE" id="D65-iL-Bsu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

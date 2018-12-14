@@ -10,6 +10,10 @@ import UIKit
 
 class CardView: UIView {
     
+    var isFaceUp = false {
+        didSet {setNeedsDisplay()}
+    }
+    
     var figureColor: UIColor = UIColor.green {
         didSet {setNeedsDisplay()}
         }
@@ -41,6 +45,11 @@ class CardView: UIView {
         UIColor.white.setFill()
         cardRect.fill()
         
+        if !isFaceUp {
+            if let cardBackImage = UIImage(named: "card") {
+                cardBackImage.draw(in: bounds)
+            }
+        } else {
         for index in 0..<figureCounts {
             let currectRect = CGRect ( x: leftTopPoinOfRectangle.x, y: leftTopPoinOfRectangle.y + CGFloat(index) * (heightRect + interline), width: widthRect, height: heightRect)
             let pathFigure = drawShape(in: currectRect)
@@ -65,6 +74,7 @@ class CardView: UIView {
             strokeColor.setStroke()
             pathFigure.stroke()
             print ("height = \(heightRect) , width = \( widthRect)")
+        }
         }
     }
     
@@ -121,6 +131,7 @@ class CardView: UIView {
         let path = UIBezierPath(roundedRect: rect, cornerRadius: leftPointX/2)
         return path
     }
+    
     
     override init ( frame: CGRect) {
         super.init ( frame: frame)
