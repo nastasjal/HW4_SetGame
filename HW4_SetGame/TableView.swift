@@ -29,9 +29,9 @@ class TableView: UIView {
         for index in 0..<cardViewArray.count {
          //   self.cardViewArray[index].alpha = 1
           //  self.cardViewArray[index].isFaceUp = false
-            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 2, delay: 0, options: [ .curveEaseOut], animations: {self.cardViewArray[index].frame =  grid[index]!}, completion: { position in
+            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: Double(index) * 0.2, options: [ .curveEaseOut], animations: {self.cardViewArray[index].frame =  grid[index]!}, completion: { position in
                 if !self.cardViewArray[index].isFaceUp {
-                UIView.transition(with: self.cardViewArray[index], duration: 0.6, options: .transitionFlipFromLeft, animations: {self.cardViewArray[index].isFaceUp = true})
+                UIView.transition(with: self.cardViewArray[index], duration: 0.5, options: .transitionFlipFromLeft, animations: {self.cardViewArray[index].isFaceUp = true})
                 }
             } )
         
