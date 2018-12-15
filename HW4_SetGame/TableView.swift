@@ -15,7 +15,6 @@ class TableView: UIView {
     {
         willSet { removeSubviews() }
         didSet { addSubviews()
-         //   setNeedsDisplay()
             setNeedsLayout()
             
         }
@@ -30,11 +29,12 @@ class TableView: UIView {
         for index in 0..<cardViewArray.count {
          //   self.cardViewArray[index].alpha = 1
           //  self.cardViewArray[index].isFaceUp = false
-            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent, .curveEaseInOut], animations: {self.cardViewArray[index].frame =  grid[index]!}, completion: { position in
+            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 2, delay: 0, options: [ .curveEaseOut], animations: {self.cardViewArray[index].frame =  grid[index]!}, completion: { position in
                 if !self.cardViewArray[index].isFaceUp {
                 UIView.transition(with: self.cardViewArray[index], duration: 0.6, options: .transitionFlipFromLeft, animations: {self.cardViewArray[index].isFaceUp = true})
                 }
             } )
+        
         }
     }
     
@@ -57,7 +57,7 @@ class TableView: UIView {
     }
     
     private func addSubviews() {
-        for card in cardViewArray {
+        for card in cardViewArray.reversed() {
             addSubview(card)
         }
         print ("add all subviews")

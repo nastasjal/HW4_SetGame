@@ -17,7 +17,7 @@
 		4DF19DF521B862A000EAA58E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF19DF421B862A000EAA58E /* CardView.swift */; };
 		4DF19DF721B8641F00EAA58E /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF19DF621B8641F00EAA58E /* TableView.swift */; };
 		4DF19DF921BD348200EAA58E /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF19DF821BD348200EAA58E /* Grid.swift */; };
-		4DF19DFF21C2C0B000EAA58E /* temporaryDecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF19DFE21C2C0B000EAA58E /* temporaryDecs.swift */; };
+		4DF19E0121C4714700EAA58E /* CardFlyingBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF19E0021C4714700EAA58E /* CardFlyingBehavior.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,7 @@
 		4DF19DF421B862A000EAA58E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		4DF19DF621B8641F00EAA58E /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		4DF19DF821BD348200EAA58E /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
-		4DF19DFE21C2C0B000EAA58E /* temporaryDecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temporaryDecs.swift; sourceTree = "<group>"; };
+		4DF19E0021C4714700EAA58E /* CardFlyingBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFlyingBehavior.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,8 +68,8 @@
 			children = (
 				4D70E9C321ADD026008E525A /* Supporting Files */,
 				4D70E9B321ADCFF1008E525A /* ViewController.swift */,
+				4DF19E0021C4714700EAA58E /* CardFlyingBehavior.swift */,
 				4D70E9B521ADCFF1008E525A /* Main.storyboard */,
-				4DF19DFE21C2C0B000EAA58E /* temporaryDecs.swift */,
 				4DF19DF621B8641F00EAA58E /* TableView.swift */,
 				4DF19DF821BD348200EAA58E /* Grid.swift */,
 				4D70E9C421ADD5F2008E525A /* Card.swift */,
@@ -161,8 +161,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DF19DFF21C2C0B000EAA58E /* temporaryDecs.swift in Sources */,
 				4D70E9B421ADCFF1008E525A /* ViewController.swift in Sources */,
+				4DF19E0121C4714700EAA58E /* CardFlyingBehavior.swift in Sources */,
 				4DF19DF721B8641F00EAA58E /* TableView.swift in Sources */,
 				4D70E9C521ADD5F2008E525A /* Card.swift in Sources */,
 				4D70E9C721ADD618008E525A /* setGame.swift in Sources */,

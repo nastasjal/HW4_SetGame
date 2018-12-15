@@ -63,23 +63,29 @@ class ViewController: UIViewController {
     
     lazy var game = SetGame(countVisibleCard: countVisibleCards, countCardsOnTheTable: countCardsOnTheTable)
 
-    func deal(card: CardView) {
+    lazy var animator = UIDynamicAnimator(referenceView: view)
+    
+    lazy var cardBehavior = CardFlyingBehavior(in: animator)
+    
+    func deal(card: CardView) {   //func to move card with alpha = 0 to deck
     //    let temporaryCardView = temporaryDecs()
         card.center = deckCenter
         card.frame = deckRect
         card.isFaceUp = false
         card.alpha = 1
         
-   /*     let temporaryCardView = temporaryDecs()
-        print ("old = \(temporaryCardView.frame)")
-        let rect = card.frame
-        print ("rect = \(rect)")
-        
-        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent, .transitionCrossDissolve], animations: {temporaryCardView.frame = card.frame})
-        
-        print ("new = \(temporaryCardView.frame)")
-card.alpha = 1*/
-        
+    }
+    
+    func flyaway(cardView: CardView, for card: Card) {
+        let tempCard = CardView()
+        updateCardView(cardView: tempCard, for: card)
+        tempCard.center = cardView.center
+        tempCard.frame = cardView.frame
+        tempCard.alpha = 1
+        tempCard.isFaceUp = true
+        view.addSubview(tempCard)
+    //    self.cardBehavior.addItem(tempCard)
+     //   UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 15, delay: 0, options: [ .curveEaseOut], animations: {tempCard.frame =  self.deckRect })
     }
     
     
@@ -108,6 +114,7 @@ card.alpha = 1*/
                 if game.selectedCards.contains(card) && game.setOnTheTable { //selectSET cards to green bordercolor
                     cardView.layer.borderWidth = 3.0
                     cardView.layer.borderColor = UIColor.green.cgColor
+                  //  flyaway(cardView: cardView, for: card)
                     UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 0  })
                 }
                 if !game.setOnTheTable && cardView.alpha == 0 {
