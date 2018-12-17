@@ -73,7 +73,7 @@ class CardView: UIView {
             let strokeColor = figureColor
             strokeColor.setStroke()
             pathFigure.stroke()
-            print ("height = \(heightRect) , width = \( widthRect)")
+          //  print ("height = \(heightRect) , width = \( widthRect)")
         }
         }
     }

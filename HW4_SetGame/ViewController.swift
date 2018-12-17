@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var cardBackstage: UIView!
     
     @IBOutlet weak var deckLabel: UILabel!
     @IBOutlet weak var setsLabel: UILabel!
@@ -33,38 +32,21 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    //TODO: delete
-    @IBOutlet weak var AddCardsOnTheTable: UIButton!
     
     @IBAction func moreCards() {
-    //    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 1, options: [.layoutSubviews, .allowAnimatedContent], animations: {self.game.deal3Card()})
         game.deal3Card()
         updateViewFromModel()
         deckLabel.text = "Deck: \(game.deck.count)"
-       // countVisibleCards = game.visibleCards.count
     }
     
     
-    var countVisibleCards = 12 /*{
-       didSet {
-            if game.deck.count == 0 {
-                addMoreButton.isHidden = true
-            //    AddCardsOnTheTable.isHidden = true
-            }
-            updateViewFromModel()
-        }
-    }*/
+    var countVisibleCards = 12
     
     var deckCenter = CGPoint(x: 250  , y: 530)
     lazy var deckRect = CGRect(origin: deckCenter, size: CGSize(width: 50, height: 80))
     
     
-    //TODO: delete countCardsOnTheTable
-  //  lazy var countCardsOnTheTable: Int  = countVisibleCards //{
-    /* get {
-     return cardButton.count
-     }*/
-    //  }
+
     
     var setsCount = 0
     
@@ -76,7 +58,6 @@ class ViewController: UIViewController {
     lazy var cardBehavior = CardFlyingBehavior(in: animator)
     
     func deal(card: CardView) {   //func to move card with alpha = 0 to deck
-    //    let temporaryCardView = temporaryDecs()
         card.center = deckCenter
         card.frame = deckRect
         card.isFaceUp = false
@@ -92,8 +73,6 @@ class ViewController: UIViewController {
         tempCard.alpha = 1
         tempCard.isFaceUp = true
         view.addSubview(tempCard)
-    //    self.cardBehavior.addItem(tempCard)
-     //   UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 15, delay: 0, options: [ .curveEaseOut], animations: {tempCard.frame =  self.deckRect })
     }
     
     
@@ -111,7 +90,6 @@ class ViewController: UIViewController {
                 addTapGestureRecognizer(for: cardView)
                 updateCardView(cardView: cardView, for: card)
                 deal(card: cardView)
-               // cardView.alpha = 0
             } else {
             let cardView = allTableView.cardViewArray[index]
                 updateCardView(cardView: cardView, for: card)
@@ -125,7 +103,7 @@ class ViewController: UIViewController {
                     cardView.layer.borderWidth = 3.0
                     cardView.layer.borderColor = UIColor.green.cgColor
                   //  flyaway(cardView: cardView, for: card)
-                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 0  })
+                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [ .allowAnimatedContent], animations: {cardView.alpha = 0  })
                 }
                 if !game.setOnTheTable && cardView.alpha == 0 && game.deck.count > 0 {
                     deal(card: cardView)
@@ -199,14 +177,6 @@ class ViewController: UIViewController {
         }
     }
     
-   
-
-    
-  /*  @IBAction func moreCardss() {
-        game.deal3Card()
-        countVisibleCards = game.visibleCards.count
-    }
-    */
     override func viewDidLoad() {
         super.viewDidLoad ()
          updateViewFromModel()
