@@ -12,12 +12,12 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var cardBackstage: UIView!
     
-    @IBOutlet weak var TableView: TableView! {
+    @IBOutlet weak var allTableView: Table! {
         didSet{
           let swipeCard = UISwipeGestureRecognizer(target: self,
                                                  action: #selector(moreCards))
             swipeCard.direction = .down
-            TableView.addGestureRecognizer(swipeCard)
+            allTableView.addGestureRecognizer(swipeCard)
             
         }
     }
@@ -30,6 +30,7 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
+    //TODO: delete
     @IBOutlet weak var AddCardsOnTheTable: UIButton!
     
     @IBAction func moreCards() {
@@ -42,7 +43,7 @@ class ViewController: UIViewController {
     var countVisibleCards = 12 {
         didSet {
             if countVisibleCards == game.deck.count{
-                AddCardsOnTheTable.isHidden = true
+            //    AddCardsOnTheTable.isHidden = true
             }
             updateViewFromModel()
         }
@@ -90,20 +91,20 @@ class ViewController: UIViewController {
     
     
     func updateViewFromModel() {
-        if TableView.cardViewArray.count > game.allCardsOnTheTable.count {
-        TableView.cardViewArray.removeLast(3)
+        if allTableView.cardViewArray.count > game.allCardsOnTheTable.count {
+        allTableView.cardViewArray.removeLast(3)
         }
         for index in game.allCardsOnTheTable.indices {
             let card = game.allCardsOnTheTable[index]
-            if TableView.cardViewArray.count <= index {  //add new card from deck
+            if allTableView.cardViewArray.count <= index {  //add new card from deck
                 let cardView = CardView()
-                TableView.cardViewArray.append(cardView)
+                allTableView.cardViewArray.append(cardView)
                 addTapGestureRecognizer(for: cardView)
                 updateCardView(cardView: cardView, for: card)
-                deal(card: cardView)
+              //  deal(card: cardView)
                // cardView.alpha = 0
             } else {
-            let cardView = TableView.cardViewArray[index]
+            let cardView = allTableView.cardViewArray[index]
                 updateCardView(cardView: cardView, for: card)
                 cardView.layer.borderWidth = 1.0
                 cardView.layer.borderColor = nil
@@ -118,8 +119,8 @@ class ViewController: UIViewController {
                     UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 0  })
                 }
                 if !game.setOnTheTable && cardView.alpha == 0 {
-                    deal(card: cardView)
-                  //  UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 1 })
+                 //   deal(card: cardView)
+                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 1 })
                 }
                 
             }
@@ -138,7 +139,7 @@ class ViewController: UIViewController {
     
     @objc func tapCard(recognizedBy recognizer: UITapGestureRecognizer){
         if let cardView = recognizer.view as? CardView{
-            let index = TableView.cardViewArray.index(of:cardView)!
+            let index = allTableView.cardViewArray.index(of:cardView)!
             let card = game.allCardsOnTheTable[index]
             game.chooseCard(for: card)
             updateViewFromModel()
