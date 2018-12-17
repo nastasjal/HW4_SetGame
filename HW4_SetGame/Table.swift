@@ -23,6 +23,7 @@ class Table: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+   //     removeSubviews()
         var grid = Grid(layout: Grid.Layout.aspectRatio(0.7),
                         frame: bounds)
         grid.cellCount = cardViewArray.count
@@ -31,13 +32,18 @@ class Table: UIView {
           //  self.cardViewArray[index].isFaceUp = false
             UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: TimeInterval(index) * 0.2, options: [ .curveEaseOut], animations: {self.cardViewArray[index].frame =  grid[index]!.insetBy(dx: 2.0, dy: 2.0)}, completion: { position in
                 if !self.cardViewArray[index].isFaceUp {
-                UIView.transition(with: self.cardViewArray[index], duration: 0.5, options: .transitionFlipFromLeft, animations: {self.cardViewArray[index].isFaceUp = true})
+                UIView.transition(with: self.cardViewArray[index], duration: 0.8, options: .transitionFlipFromLeft, animations: {self.cardViewArray[index].isFaceUp = true})
                 }
             } )
         
         }
     }
     
+    func visibleAll() {
+        for card in cardViewArray {
+            card.alpha = 1
+        }
+    }
     
     func updateView(){
         removeSubviews()

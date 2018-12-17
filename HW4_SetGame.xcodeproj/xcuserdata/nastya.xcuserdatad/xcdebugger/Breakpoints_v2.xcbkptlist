@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HW4_SetGame/ViewController.swift"
-            timestampString = "566746353.86625"
+            timestampString = "566757781.339608"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "moreCards()"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HW4_SetGame/ViewController.swift"
-            timestampString = "566746353.866419"
+            timestampString = "566757781.3403161"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "moreCards()"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HW4_SetGame/ViewController.swift"
-            timestampString = "566746353.8665611"
+            timestampString = "566757781.340904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "updateViewFromModel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,7 +282,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HW4_SetGame/setGame.swift"
-            timestampString = "566682913.090616"
+            timestampString = "566756855.709056"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "54"
@@ -298,7 +298,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HW4_SetGame/setGame.swift"
-            timestampString = "566682913.090692"
+            timestampString = "566756855.709125"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
@@ -314,7 +314,7 @@
                   moduleName = "HW4_SetGame"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/nastya/Documents/swift/hometaskIOS11/HW4_SetGame/HW4_SetGame/HW4_SetGame/setGame.swift"
-                  timestampString = "566605750.954318"
+                  timestampString = "566754109.2193429"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "38"
@@ -329,7 +329,7 @@
                   moduleName = "HW4_SetGame"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/nastya/Documents/swift/hometaskIOS11/HW4_SetGame/HW4_SetGame/HW4_SetGame/setGame.swift"
-                  timestampString = "566605750.957203"
+                  timestampString = "566754109.221887"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "38"
@@ -337,6 +337,38 @@
                   offsetFromSymbolStart = "174">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HW4_SetGame/Table.swift"
+            timestampString = "566757781.34164"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "layoutSubviews()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HW4_SetGame/ViewController.swift"
+            timestampString = "566757781.341742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "updateViewFromModel()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

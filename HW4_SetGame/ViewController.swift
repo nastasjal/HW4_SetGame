@@ -12,6 +12,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var cardBackstage: UIView!
     
+    @IBOutlet weak var deckLabel: UILabel!
+    @IBOutlet weak var setsLabel: UILabel!
+    @IBOutlet weak var addMoreButton: UIButton!
     @IBOutlet weak var allTableView: Table! {
         didSet{
           let swipeCard = UISwipeGestureRecognizer(target: self,
@@ -36,33 +39,37 @@ class ViewController: UIViewController {
     @IBAction func moreCards() {
     //    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 1, options: [.layoutSubviews, .allowAnimatedContent], animations: {self.game.deal3Card()})
         game.deal3Card()
-        countVisibleCards = game.visibleCards.count
+        updateViewFromModel()
+        deckLabel.text = "Deck: \(game.deck.count)"
+       // countVisibleCards = game.visibleCards.count
     }
     
     
-    var countVisibleCards = 12 {
-        didSet {
-            if countVisibleCards == game.deck.count{
+    var countVisibleCards = 12 /*{
+       didSet {
+            if game.deck.count == 0 {
+                addMoreButton.isHidden = true
             //    AddCardsOnTheTable.isHidden = true
             }
             updateViewFromModel()
         }
-    }
+    }*/
     
     var deckCenter = CGPoint(x: 250  , y: 530)
     lazy var deckRect = CGRect(origin: deckCenter, size: CGSize(width: 50, height: 80))
     
     
     //TODO: delete countCardsOnTheTable
-    var countCardsOnTheTable: Int  = 12 //{
+  //  lazy var countCardsOnTheTable: Int  = countVisibleCards //{
     /* get {
      return cardButton.count
      }*/
     //  }
     
+    var setsCount = 0
     
     
-    lazy var game = SetGame(countVisibleCard: countVisibleCards, countCardsOnTheTable: countCardsOnTheTable)
+    lazy var game = SetGame(countVisibleCard: countVisibleCards, countCardsOnTheTable: countVisibleCards)
 
     lazy var animator = UIDynamicAnimator(referenceView: view)
     
@@ -92,7 +99,9 @@ class ViewController: UIViewController {
     
     func updateViewFromModel() {
         if allTableView.cardViewArray.count > game.allCardsOnTheTable.count {
-        allTableView.cardViewArray.removeLast(3)
+         let neeedRemoveCardCount = allTableView.cardViewArray.count - game.allCardsOnTheTable.count
+        allTableView.visibleAll()
+        allTableView.cardViewArray.removeLast(neeedRemoveCardCount)
         }
         for index in game.allCardsOnTheTable.indices {
             let card = game.allCardsOnTheTable[index]
@@ -101,7 +110,7 @@ class ViewController: UIViewController {
                 allTableView.cardViewArray.append(cardView)
                 addTapGestureRecognizer(for: cardView)
                 updateCardView(cardView: cardView, for: card)
-              //  deal(card: cardView)
+                deal(card: cardView)
                // cardView.alpha = 0
             } else {
             let cardView = allTableView.cardViewArray[index]
@@ -118,9 +127,9 @@ class ViewController: UIViewController {
                   //  flyaway(cardView: cardView, for: card)
                     UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 0  })
                 }
-                if !game.setOnTheTable && cardView.alpha == 0 {
-                 //   deal(card: cardView)
-                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 1 })
+                if !game.setOnTheTable && cardView.alpha == 0 && game.deck.count > 0 {
+                    deal(card: cardView)
+                  //  UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 1 })
                 }
                 
             }
@@ -142,7 +151,12 @@ class ViewController: UIViewController {
             let index = allTableView.cardViewArray.index(of:cardView)!
             let card = game.allCardsOnTheTable[index]
             game.chooseCard(for: card)
+            if game.setOnTheTable {
+                setsCount += 1
+                setsLabel.text = "Sets: \(setsCount)"
+            }
             updateViewFromModel()
+            deckLabel.text = "Deck: \(game.deck.count)"
         }
         
     }
