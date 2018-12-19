@@ -11,7 +11,14 @@ import UIKit
 class ViewController: UIViewController {
     
     
-    @IBOutlet weak var deckLabel: UILabel!
+    @IBOutlet weak var deckLabel: UILabel! {
+        didSet{
+            if game.deck.count == 0 {
+                temporaryDeck.alpha = 0
+            }
+        }
+    }
+    
     @IBOutlet weak var setsLabel: UILabel!
     @IBOutlet weak var addMoreButton: UIButton!
     @IBOutlet weak var allTableView: Table! {
@@ -24,7 +31,27 @@ class ViewController: UIViewController {
         }
     }
     
+    var countVisibleCards = 12
+    var deckCenter = CGPoint(x: 275  , y: 570)
 
+    lazy var deckRect = CGRect(origin: deckCenter, size: CGSize(width: 50, height: 80))
+    var deckSets = CGPoint(x: 215  , y: 570)
+    lazy var deckSetsRect = CGRect(origin: deckSets, size: CGSize(width: 50, height: 80))
+    
+    lazy var temporarySetsDeck = CardView(frame: deckSetsRect)
+    lazy var temporaryDeck = CardView(frame: deckRect)
+    
+    var setsCount = 0 {
+        didSet {
+            if setsCount > 0 {
+                temporarySetsDeck.alpha = 1
+            }
+        }
+    }
+    
+    lazy var game = SetGame(countVisibleCard: countVisibleCards, countCardsOnTheTable: countVisibleCards)
+    lazy var animator = UIDynamicAnimator(referenceView: view)
+    lazy var cardBehavior = CardFlyingBehavior(in: animator)
    
     
     @IBAction func shuffleDeck(_ sender: UIRotationGestureRecognizer) {
@@ -40,26 +67,11 @@ class ViewController: UIViewController {
     }
     
     
-    var countVisibleCards = 12
-    
-    var deckCenter = CGPoint(x: 250  , y: 530)
-    lazy var deckRect = CGRect(origin: deckCenter, size: CGSize(width: 50, height: 80))
-    
-    
 
-    
-    var setsCount = 0
-    
-    
-    lazy var game = SetGame(countVisibleCard: countVisibleCards, countCardsOnTheTable: countVisibleCards)
-
-    lazy var animator = UIDynamicAnimator(referenceView: view)
-    
-    lazy var cardBehavior = CardFlyingBehavior(in: animator)
     
     func deal(card: CardView) {   //func to move card with alpha = 0 to deck
         card.center = deckCenter
-        card.frame = deckRect
+        card.frame =  deckRect.offsetBy(dx: -deckRect.width/2, dy: -deckRect.height/2)
         card.isFaceUp = false
         card.alpha = 1
         
@@ -68,11 +80,16 @@ class ViewController: UIViewController {
     func flyaway(cardView: CardView, for card: Card) {
         let tempCard = CardView()
         updateCardView(cardView: tempCard, for: card)
-        tempCard.center = cardView.center
-        tempCard.frame = cardView.frame
+        tempCard.frame = cardView.frame.offsetBy(dx: cardView.frame.width / 2, dy: cardView.frame.height / 2)
         tempCard.alpha = 1
         tempCard.isFaceUp = true
         view.addSubview(tempCard)
+        cardBehavior.addItem(tempCard)
+     //   UIView.transition(with: tempCard, duration: 2, options: .transitionFlipFromLeft, animations: {tempCard.isFaceUp = false})
+        UIView.transition(with: tempCard, duration: 0.8, options: .transitionFlipFromLeft, animations: {tempCard.isFaceUp = false}, completion: { finished in
+            tempCard.frame = self.deckSetsRect
+        })
+
     }
     
     
@@ -102,8 +119,9 @@ class ViewController: UIViewController {
                 if game.selectedCards.contains(card) && game.setOnTheTable { //selectSET cards to green bordercolor
                     cardView.layer.borderWidth = 3.0
                     cardView.layer.borderColor = UIColor.green.cgColor
-                  //  flyaway(cardView: cardView, for: card)
-                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [ .allowAnimatedContent], animations: {cardView.alpha = 0  })
+                    flyaway(cardView: cardView, for: card)
+                    cardView.alpha = 0
+                   // UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [ .allowAnimatedContent], animations: {cardView.alpha = 0  })
                 }
                 if !game.setOnTheTable && cardView.alpha == 0 && game.deck.count > 0 {
                     deal(card: cardView)
@@ -113,6 +131,9 @@ class ViewController: UIViewController {
             }
             
             
+        }
+        if game.deck.count == 0 {
+            addMoreButton.isHidden = true
         }
         
     }
@@ -179,8 +200,20 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad ()
-         updateViewFromModel()
+        updateViewFromModel()
+        temporarySetsDeck.alpha = 0
+        temporaryDeck.alpha = 1
+        view.addSubview(temporarySetsDeck)
+        view.addSubview(temporaryDeck)
+        
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        cardBehavior.snapPoint = CGPoint(x: deckSets.x + deckSetsRect.width/2, y: deckSets.y + deckSetsRect.height/2)
+        
+    }
+    
     
 }
 

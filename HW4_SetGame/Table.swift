@@ -34,42 +34,41 @@ class Table: UIView {
         }
     }
 
+    func dealAnimation(index: Int, grid: Grid, timer: Int){
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: TimeInterval(timer) * 0.2, options: [ .curveEaseOut], animations: {self.cardViewArray[index].frame =  grid[index]!.insetBy(dx: 2.0, dy: 2.0)}, completion: { position in
+            if !self.cardViewArray[index].isFaceUp {
+                UIView.transition(with: self.cardViewArray[index], duration: 0.8, options: .transitionFlipFromLeft, animations: {self.cardViewArray[index].isFaceUp = true})
+            }
+        } )
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         var grid = Grid(layout: Grid.Layout.aspectRatio(0.7),
                         frame: bounds)
         grid.cellCount = cardViewArray.count
-          print ("oldcell size = \(self.lastCellSize)")
-          print ("currentcell size = \(grid.cellSize)")
+        print ("oldcell size = \(self.lastCellSize)")
+        print ("currentcell size = \(grid.cellSize)")
         if self.lastCellSize != grid.cellSize {
-        for index in 0..<cardViewArray.count {
-            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: TimeInterval(index) * 0.2, options: [ .curveEaseOut], animations: {self.cardViewArray[index].frame =  grid[index]!.insetBy(dx: 2.0, dy: 2.0)}, completion: { position in
-                if !self.cardViewArray[index].isFaceUp {
-                UIView.transition(with: self.cardViewArray[index], duration: 0.8, options: .transitionFlipFromLeft, animations: {self.cardViewArray[index].isFaceUp = true})
-                }
-            } )
-        
-        }
+            for index in 0..<cardViewArray.count {
+              dealAnimation(index: index, grid: grid, timer: index)
+                
+            }
         } else {
-        var testArray = cardViewArray.enumerated().filter(){ !$0.element.isFaceUp}.map{ $0.offset }
-        var indexTimer = 0
-        for index in testArray {
-            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: TimeInterval(indexTimer) * 0.2, options: [ .curveEaseOut], animations: {self.cardViewArray[index].frame =  grid[index]!.insetBy(dx: 2.0, dy: 2.0)}, completion: { position in
-                if !self.cardViewArray[index].isFaceUp {
-                    UIView.transition(with: self.cardViewArray[index], duration: 0.8, options: .transitionFlipFromLeft, animations: {self.cardViewArray[index].isFaceUp = true})
-                }
-            } )
-            indexTimer += 1
-        }
-        
-        print("testArray = \(testArray)")
-        
+            let changedCardsArray = cardViewArray.enumerated().filter(){ !$0.element.isFaceUp}.map{ $0.offset }
+            var indexTimer = 0
+            for index in changedCardsArray {
+             dealAnimation(index: index, grid: grid, timer: indexTimer)
+                indexTimer += 1
+            }
+            
+            print("testArray = \(changedCardsArray)")
+            
         }
         self.lastCellSize = grid.cellSize
     }
     
-   
+  
     
     func visibleAll() {
         for card in cardViewArray {

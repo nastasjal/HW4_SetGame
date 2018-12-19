@@ -14,6 +14,7 @@ class CardFlyingBehavior: UIDynamicBehavior {
     lazy var collisionBehavior: UICollisionBehavior = {
         let behavior = UICollisionBehavior()
         behavior.translatesReferenceBoundsIntoBoundary = true
+ 
         //    animator.addBehavior(behavior)
         return behavior
     }()
@@ -22,16 +23,21 @@ class CardFlyingBehavior: UIDynamicBehavior {
     
     lazy var itemBehavior: UIDynamicItemBehavior = {
         let behavior = UIDynamicItemBehavior()
-        behavior.allowsRotation = true
-        behavior.elasticity = 1
+      //  behavior.allowsRotation = true
+      //  behavior.elasticity = 1
         behavior.resistance = 0
         //       animator.addBehavior(behavior)
         return behavior
     }()
     
     func addItem(_ item: UIDynamicItem) {
-      //  collisionBehavior.addItem(item)
+       collisionBehavior.addItem(item)
      //   itemBehavior.addItem(item)
+        itemBehavior.addItem(item)
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (timer) in
+            self.collisionBehavior.removeItem(item)
+            self.snap(item: item)
+        }
         push(item: item)
     }
     
@@ -40,11 +46,19 @@ class CardFlyingBehavior: UIDynamicBehavior {
      itemBehavior.removeItem(item)
     }
     
+    var snapPoint = CGPoint()
+    
+    private func snap(item : UIDynamicItem){
+        let snap = UISnapBehavior(item: item, snapTo: snapPoint)
+        snap.damping = 1
+        addChildBehavior(snap)
+    }
+    
     private func push (item : UIDynamicItem){
         let push = UIPushBehavior(items: [item], mode: .instantaneous)
-     
-        push.angle = (2*CGFloat.pi).arc4Random
-        push.magnitude = CGFloat(3).arc4Random
+        push.angle = -(CGFloat.pi * 2 ).arc4Random
+       
+        push.magnitude = CGFloat(4)
         push.action = { [unowned push, weak self] in
             self?.removeChildBehavior(push)
         }

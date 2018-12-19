@@ -41,7 +41,7 @@ class CardView: UIView {
     
     
     override func draw(_ rect: CGRect) {
-        let cardRect = UIBezierPath(roundedRect: rect, cornerRadius: 10)
+        let cardRect = UIBezierPath(roundedRect: rect, cornerRadius: 5)
         UIColor.white.setFill()
         cardRect.fill()
         
@@ -51,7 +51,7 @@ class CardView: UIView {
             }
         } else {
         for index in 0..<figureCounts {
-            let currectRect = CGRect ( x: leftTopPoinOfRectangle.x, y: leftTopPoinOfRectangle.y + CGFloat(index) * (heightRect + interline), width: widthRect, height: heightRect)
+            let currectRect = CGRect ( x: leftTopPoinOfRectangle.x, y: leftTopPoinOfRectangle.y + CGFloat(index) * (heightRect), width: widthRect, height: heightRect).insetBy(dx: 2, dy: 2)
             let pathFigure = drawShape(in: currectRect)
             
             switch figureFill {
@@ -69,11 +69,10 @@ class CardView: UIView {
             default: break
             }
             
-            pathFigure.lineWidth = 3.0
+            pathFigure.lineWidth = 1.0
             let strokeColor = figureColor
             strokeColor.setStroke()
             pathFigure.stroke()
-          //  print ("height = \(heightRect) , width = \( widthRect)")
         }
         }
     }
@@ -106,14 +105,14 @@ class CardView: UIView {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
         
-        path.addCurve(to: CGPoint(x: rect.maxX, y: rect.minY*2/5),
-                      controlPoint1: CGPoint(x: rect.minX / 2, y: rect.minY/5),
-                      controlPoint2: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addCurve(to: CGPoint(x: rect.maxX, y: rect.minY),
+                      controlPoint1: CGPoint(x: rect.minX, y: rect.minY - rect.height/5),
+                      controlPoint2: CGPoint(x: rect.maxX, y: rect.maxY - rect.height/3))
         
         path.addCurve(to: CGPoint(x: rect.minX, y: rect.maxY),
-                      controlPoint1: CGPoint(x: rect.maxX + rect.midX/3, y: rect.maxY + rect.midY/2),
-                      controlPoint2: CGPoint(x: rect.minX / 2 + rect.midX/2, y: rect.minY/5 + rect.midY/2))
-        path.close()
+                      controlPoint1: CGPoint(x: rect.maxX, y: rect.maxY + rect.height/3),
+                      controlPoint2: CGPoint(x: rect.minX, y: rect.minY + rect.height/5))
+       path.close()
         return path
     }
     
@@ -163,11 +162,11 @@ extension CardView {
     
     var leftTopPoinOfRectangle: CGPoint {
         get {
-            let yPoint = bounds.height - heightRect * CGFloat(figureCounts) - interline * (CGFloat(figureCounts)-1)
+            let yPoint = bounds.height - heightRect * CGFloat(figureCounts)
             return CGPoint(x: (bounds.width - widthRect)/2, y: yPoint / 2)
         }
     }
-    
+  
     var widthRect: CGFloat {
         get {
             return bounds.width * 9 / 10
@@ -178,10 +177,6 @@ extension CardView {
         get {
             return bounds.height / 4
         }
-    }
-    
-    var interline: CGFloat {
-        return heightRect/8
     }
     
 }
