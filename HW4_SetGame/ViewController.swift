@@ -32,11 +32,15 @@ class ViewController: UIViewController {
     }
     
     var countVisibleCards = 12
-    var deckCenter = CGPoint(x: 275  , y: 570)
+    var deckCenter: CGPoint{
+        return view.convert(CGPoint(x: allTableView.center.x + allTableView.frame.width * 0.5, y: allTableView.center.y + allTableView.frame.height * 0.7), to: allTableView)
+    }
+    lazy var deckRect = view.convert(CGRect(origin: deckCenter, size: CGSize(width: 50, height: 80)), to: allTableView)
+    var deckSets : CGPoint{
+        return view.convert(CGPoint(x: allTableView.center.x + allTableView.frame.width * 0.3, y: allTableView.center.y + allTableView.frame.height * 0.7), to: allTableView)
+    }
+    lazy var deckSetsRect = view.convert(CGRect(origin: deckSets, size: CGSize(width: 50, height: 80)), to: allTableView)
 
-    lazy var deckRect = CGRect(origin: deckCenter, size: CGSize(width: 50, height: 80))
-    var deckSets = CGPoint(x: 215  , y: 570)
-    lazy var deckSetsRect = CGRect(origin: deckSets, size: CGSize(width: 50, height: 80))
     
     lazy var temporarySetsDeck = CardView(frame: deckSetsRect)
     lazy var temporaryDeck = CardView(frame: deckRect)
@@ -70,8 +74,7 @@ class ViewController: UIViewController {
 
     
     func deal(card: CardView) {   //func to move card with alpha = 0 to deck
-        card.center = deckCenter
-        card.frame =  deckRect.offsetBy(dx: -deckRect.width/2, dy: -deckRect.height/2)
+        card.frame = view.convert(deckRect, to: allTableView)
         card.isFaceUp = false
         card.alpha = 1
         
@@ -80,14 +83,15 @@ class ViewController: UIViewController {
     func flyaway(cardView: CardView, for card: Card) {
         let tempCard = CardView()
         updateCardView(cardView: tempCard, for: card)
-        tempCard.frame = cardView.frame.offsetBy(dx: cardView.frame.width / 2, dy: cardView.frame.height / 2)
+        tempCard.frame = view.convert(cardView.frame, to: allTableView)
         tempCard.alpha = 1
         tempCard.isFaceUp = true
         view.addSubview(tempCard)
         cardBehavior.addItem(tempCard)
      //   UIView.transition(with: tempCard, duration: 2, options: .transitionFlipFromLeft, animations: {tempCard.isFaceUp = false})
         UIView.transition(with: tempCard, duration: 0.8, options: .transitionFlipFromLeft, animations: {tempCard.isFaceUp = false}, completion: { finished in
-            tempCard.frame = self.deckSetsRect
+            tempCard.frame = self.view.convert(self.deckSetsRect, to: self.allTableView)
+            
         })
 
     }
@@ -198,7 +202,7 @@ class ViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
+ /*   override func viewDidLoad() {
         super.viewDidLoad ()
         updateViewFromModel()
         temporarySetsDeck.alpha = 0
@@ -206,11 +210,20 @@ class ViewController: UIViewController {
         view.addSubview(temporarySetsDeck)
         view.addSubview(temporaryDeck)
         
+    }*/
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateViewFromModel()
+        temporarySetsDeck.alpha = 0
+        temporaryDeck.alpha = 1
+        view.addSubview(temporarySetsDeck)
+        view.addSubview(temporaryDeck)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        cardBehavior.snapPoint = CGPoint(x: deckSets.x + deckSetsRect.width/2, y: deckSets.y + deckSetsRect.height/2)
+        cardBehavior.snapPoint = deckSets
         
     }
     
