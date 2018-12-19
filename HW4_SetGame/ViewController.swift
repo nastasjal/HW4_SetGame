@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var setsLabel: UILabel!
     @IBOutlet weak var addMoreButton: UIButton!
-    @IBOutlet weak var allTableView: Table! {
+    @IBOutlet weak var allTableView: TableCards! {
         didSet{
           let swipeCard = UISwipeGestureRecognizer(target: self,
                                                  action: #selector(moreCards))

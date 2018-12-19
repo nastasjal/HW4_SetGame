@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Table: UIView {
+class TableCards: UIView {
     
     var lastCellSize = CGSize()
     
