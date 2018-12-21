@@ -60,9 +60,6 @@
                             <constraint firstItem="o1l-Bx-aR4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="19" id="bkm-W1-KtI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="rSQ-oy-mRq" appends="YES" id="D7P-EQ-eU4"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="addMoreButton" destination="7C7-YK-ZOm" id="wmT-dt-jQf"/>
@@ -72,11 +69,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <rotationGestureRecognizer id="rSQ-oy-mRq">
-                    <connections>
-                        <action selector="shuffleDeck:" destination="BYZ-38-t0r" id="luH-Dz-GEG"/>
-                    </connections>
-                </rotationGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>

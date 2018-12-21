@@ -58,10 +58,10 @@ class ViewController: UIViewController {
     lazy var cardBehavior = CardFlyingBehavior(in: animator)
    
     
-    @IBAction func shuffleDeck(_ sender: UIRotationGestureRecognizer) {
+ /*   @IBAction func shuffleDeck(_ sender: UIRotationGestureRecognizer) {
         game.shufleDeck()
         updateViewFromModel()
-    }
+    }*/
     
     
     @IBAction func moreCards() {
@@ -129,11 +129,9 @@ class ViewController: UIViewController {
                     cardView.layer.borderColor = UIColor.green.cgColor
                     flyaway(cardView: cardView, for: card)
                     cardView.alpha = 0
-                   // UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [ .allowAnimatedContent], animations: {cardView.alpha = 0  })
                 }
                 if !game.setOnTheTable && cardView.alpha == 0 && game.deck.count > 0 {
                     deal(card: cardView)
-                  //  UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: [.layoutSubviews, .allowAnimatedContent], animations: {cardView.alpha = 1 })
                 }
                 
             }
@@ -206,15 +204,6 @@ class ViewController: UIViewController {
         }
     }
     
- /*   override func viewDidLoad() {
-        super.viewDidLoad ()
-        updateViewFromModel()
-        temporarySetsDeck.alpha = 0
-        temporaryDeck.alpha = 1
-        view.addSubview(temporarySetsDeck)
-        view.addSubview(temporaryDeck)
-        
-    }*/
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
