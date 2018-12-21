@@ -47,9 +47,9 @@ class ViewController: UIViewController {
     
     var setsCount = 0 {
         didSet {
-            if setsCount > 0 {
+       /*     if setsCount > 0 {
                 temporarySetsDeck.alpha = 1
-            }
+            } */
         }
     }
     
@@ -88,11 +88,15 @@ class ViewController: UIViewController {
         tempCard.isFaceUp = true
         view.addSubview(tempCard)
         cardBehavior.addItem(tempCard)
-     //   UIView.transition(with: tempCard, duration: 2, options: .transitionFlipFromLeft, animations: {tempCard.isFaceUp = false})
-        UIView.transition(with: tempCard, duration: 0.8, options: .transitionFlipFromLeft, animations: {tempCard.isFaceUp = false}, completion: { finished in
-            tempCard.frame = self.view.convert(self.deckSetsRect, to: self.allTableView)
-            
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
+        UIView.transition(with: tempCard, duration: 0.8, options: [.transitionFlipFromLeft, .beginFromCurrentState], animations: {tempCard.isFaceUp = false}, completion: { finished in
+                tempCard.removeFromSuperview()
+                if self.setsCount > 0 {
+                    self.temporarySetsDeck.alpha = 1
+                }
+            })
         })
+     
 
     }
     

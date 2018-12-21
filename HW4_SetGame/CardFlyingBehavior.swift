@@ -15,7 +15,7 @@ class CardFlyingBehavior: UIDynamicBehavior {
         let behavior = UICollisionBehavior()
         behavior.translatesReferenceBoundsIntoBoundary = true
  
-        //    animator.addBehavior(behavior)
+        //animator.addBehavior(behavior)
         return behavior
     }()
     
@@ -23,8 +23,6 @@ class CardFlyingBehavior: UIDynamicBehavior {
     
     lazy var itemBehavior: UIDynamicItemBehavior = {
         let behavior = UIDynamicItemBehavior()
-      //  behavior.allowsRotation = true
-      //  behavior.elasticity = 1
         behavior.resistance = 0
         //       animator.addBehavior(behavior)
         return behavior
@@ -58,7 +56,7 @@ class CardFlyingBehavior: UIDynamicBehavior {
         let push = UIPushBehavior(items: [item], mode: .instantaneous)
         push.angle = -(CGFloat.pi * 2 ).arc4Random
        
-        push.magnitude = CGFloat(4)
+        push.magnitude = CGFloat(2)
         push.action = { [unowned push, weak self] in
             self?.removeChildBehavior(push)
         }
